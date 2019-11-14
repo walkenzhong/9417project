@@ -65,7 +65,7 @@ def student_sum_and_var(filename):
 
 def main(file_dir):
     all_filename = get_filename(file_dir)
-    print(all_filename)
+    #print(all_filename)
     all_student_data = []
     for i in all_filename:
         student_uid,sum,var = student_sum_and_var(file_dir+i)
