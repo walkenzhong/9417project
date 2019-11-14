@@ -2,6 +2,7 @@
 preprocess为处理好的数据及处理的代码  
 input里为原始的sensor数据，但是太大了不给上传  
 *** 
+### data
 #### bluetooth.csv  
 uid: student id  
 sum: 接触过的蓝牙设备数量总和（去除每日重复）  
