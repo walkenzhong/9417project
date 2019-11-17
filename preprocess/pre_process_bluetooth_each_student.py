@@ -4,7 +4,7 @@ import numpy as np
 import re
 import os
 
-#read all line from file, and return all line,not include header
+#get data from file
 def get_file(filename):
     all_file = pd.read_csv(filename,sep=',')
     return all_file
@@ -16,15 +16,10 @@ def from_timestamp_to_daytime(timestamp):
 def get_filename(file_dir):
     for root,dirs,files in os.walk(file_dir):
         return files
-def get_sum_and_var(daily_data):
-    daily_mac_address_num = []
-    for i in daily_data:
-        daily_mac_address_num.append(i[3])
-    return np.sum(daily_mac_address_num),np.var(daily_mac_address_num)
 
-def student_sum_and_var(filename):
+def each_student_data(filename):
     all_data = get_file(filename)
-    #print(all_data)
+    # print(all_data)
     data_and_mac_address = []
     for i in range(len(all_data)):
         time = from_timestamp_to_daytime(all_data['time'][i])
@@ -32,8 +27,8 @@ def student_sum_and_var(filename):
         mon = time.tm_mon
         day = time.tm_mday
         mac_address = all_data['MAC'][i]
-        data_and_mac_address.append([year,mon,day,mac_address])
-    #print(data_and_mac_address)
+        data_and_mac_address.append([year, mon, day, mac_address])
+    # print(data_and_mac_address)
     start_year = data_and_mac_address[0][0]
     start_mon = data_and_mac_address[0][1]
     start_day = data_and_mac_address[0][2]
@@ -43,10 +38,10 @@ def student_sum_and_var(filename):
         end_year = i[0]
         end_mon = i[1]
         end_day = i[2]
-        if(start_year == end_year and start_mon == end_mon and start_day == end_day):
+        if (start_year == end_year and start_mon == end_mon and start_day == end_day):
             mac_address_arr.append(i[3])
         else:
-            check_repeat = 1 # check mac address repeat, 1: check repeat, 0:not check repeat
+            check_repeat = 1  # check mac address repeat, 1: check repeat, 0:not check repeat
             if check_repeat == 1:
                 after_check_repeat_mac_address_arr = list(set(mac_address_arr))
             else:
@@ -56,29 +51,25 @@ def student_sum_and_var(filename):
             start_year = end_year
             start_mon = end_mon
             start_day = end_day
-            mac_address_arr = []
-            mac_address_arr.append(i[3])
-    sum,var = get_sum_and_var(data_and_mac_address_num_daily)
     student_uid = re.findall('bt_([^"]*).csv', filename)[0]
-    return student_uid,sum,var
-
-
+    return student_uid,data_and_mac_address_num_daily
 
 def main(file_dir):
     all_filename = get_filename(file_dir)
-    #print(all_filename)
-    all_student_data = []
     for i in all_filename:
-        student_uid,sum,var = student_sum_and_var(file_dir+i)
+        student_uid,one_student_data = each_student_data(file_dir + i)
+        name = ['year','mon','day','mac_address_num']
+        student = pd.DataFrame(columns=name, data=one_student_data)
+        file_in_paths = os.listdir("data20191117")
+        #print(paths)
+        if 'bluetooth' not in file_in_paths :
+            os.mkdir('data20191117\\bluetooth\\')
+        student.to_csv('data20191117\\bluetooth\\bluetooth_'+ student_uid + '.csv', encoding='gbk')
         print(student_uid)
-        all_student_data.append([student_uid,sum,var])
-    return all_student_data
+    print('done')
+
+
 
 
 if __name__ == '__main__':
-    all_student_data = main('..\\input\\sensor\\bluetooth\\')
-    #np.savetxt('conversation.csv',all_student_data,delimiter = ',')
-    name = ['uid','sum','var']
-    test = pd.DataFrame(columns=name,data=all_student_data)
-    test.to_csv('data\\bluetooth.csv',encoding = 'gbk')
-    print('done')
+    main('..\\input\\sensor\\bluetooth\\');
