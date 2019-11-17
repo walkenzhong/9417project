@@ -3,6 +3,7 @@ import time
 import numpy as np
 import re
 import os
+import matplotlib.pyplot as plt
 
 #get data from file
 def get_file(filename):
@@ -51,6 +52,7 @@ def each_student_data(filename):
             start_year = end_year
             start_mon = end_mon
             start_day = end_day
+            mac_address_arr = []
     student_uid = re.findall('bt_([^"]*).csv', filename)[0]
     return student_uid,data_and_mac_address_num_daily
 
@@ -60,6 +62,7 @@ def main(file_dir):
         student_uid,one_student_data = each_student_data(file_dir + i)
         name = ['year','mon','day','mac_address_num']
         student = pd.DataFrame(columns=name, data=one_student_data)
+        show_plt(student_uid,one_student_data)
         file_in_paths = os.listdir("data20191117")
         #print(paths)
         if 'bluetooth' not in file_in_paths :
@@ -67,6 +70,28 @@ def main(file_dir):
         student.to_csv('data20191117\\bluetooth\\bluetooth_'+ student_uid + '.csv', encoding='gbk')
         print(student_uid)
     print('done')
+
+def show_plt(uid,student):
+    time = []
+    data = []
+    for i in student:
+        time_str = str(i[0]) + '-' + str(i[1]) + '-' + str(i[2])
+        time.append(time_str)
+        data.append(i[3])
+    plt.xticks(rotation=270)
+    plt.bar(time, data)
+    plt.gca().margins(x=0)
+    plt.gcf().canvas.draw()
+    tl = plt.gca().get_xticklabels()
+    maxsize = max([t.get_window_extent().width for t in tl])
+    m = 0.2  # inch margin
+    s = maxsize / plt.gcf().dpi * 150 + 2 * m
+    margin = m / plt.gcf().get_size_inches()[0]
+
+    plt.gcf().subplots_adjust(left=margin, right=1. - margin)
+    plt.gcf().set_size_inches(s, plt.gcf().get_size_inches()[1])
+    plt.savefig('data20191117\\bluetooth\\bluetooth_' + uid +".png")
+    #plt.show()
 
 
 
