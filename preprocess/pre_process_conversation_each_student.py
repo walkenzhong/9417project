@@ -79,7 +79,7 @@ def show_plt(uid,student):
     time = []
     data = []
     for i in student:
-        time_str = str(i[0]) + '-' + str(i[1]) + '-' + str(i[2])
+        time_str = str(i[1]) + str(i[2])
         time.append(time_str)
         data.append(i[3])
     plt.xticks(rotation=270)
