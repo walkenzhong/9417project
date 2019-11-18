@@ -95,6 +95,7 @@ def show_plt(uid,student):
     plt.gcf().subplots_adjust(left=margin, right=1. - margin)
     plt.gcf().set_size_inches(s, plt.gcf().get_size_inches()[1])
     plt.savefig('data20191117\\conversation\\conversation_' + uid +".png")
+    plt.show()
 
 if __name__ == '__main__':
     main('..\\input\\sensor\\conversation\\')

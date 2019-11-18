@@ -91,7 +91,7 @@ def show_plt(uid,student):
     plt.gcf().subplots_adjust(left=margin, right=1. - margin)
     plt.gcf().set_size_inches(s, plt.gcf().get_size_inches()[1])
     plt.savefig('data20191117\\bluetooth\\bluetooth_' + uid +".png")
-    #plt.show()
+    plt.show()
 
 
 
