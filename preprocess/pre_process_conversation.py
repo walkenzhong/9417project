@@ -77,7 +77,7 @@ def main(file_dir):
 if __name__ == '__main__':
     all_student_data = main('..\\input\\sensor\\conversation\\')
     #np.savetxt('conversation.csv',all_student_data,delimiter = ',')
-    name = ['uid','sum','var','mean','day_num']
+    name = ['uid','conversation_sum','conversation_var','conversation_mean','conversation_day_num']
     test = pd.DataFrame(columns=name,data=all_student_data)
     test.to_csv('data\\conversation.csv',encoding = 'gbk')
     print('done')
