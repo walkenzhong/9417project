@@ -20,9 +20,9 @@ def get_sum_and_var(daily_data):
     daily_mac_address_num = []
     for i in daily_data:
         daily_mac_address_num.append(i[3])
-    return np.sum(daily_mac_address_num),np.var(daily_mac_address_num)
+    return np.sum(daily_mac_address_num),np.var(daily_mac_address_num),np.mean(daily_mac_address_num),len(daily_mac_address_num)
 
-def student_sum_and_var(filename):
+def student_sum_and_var_and_mean(filename):
     all_data = get_file(filename)
     #print(all_data)
     data_and_mac_address = []
@@ -58,9 +58,9 @@ def student_sum_and_var(filename):
             start_day = end_day
             mac_address_arr = []
             mac_address_arr.append(i[3])
-    sum,var = get_sum_and_var(data_and_mac_address_num_daily)
+    sum,var,mean,day_num = get_sum_and_var(data_and_mac_address_num_daily)
     student_uid = re.findall('bt_([^"]*).csv', filename)[0]
-    return student_uid,sum,var
+    return student_uid,sum,var,mean,day_num
 
 
 
@@ -69,16 +69,16 @@ def main(file_dir):
     #print(all_filename)
     all_student_data = []
     for i in all_filename:
-        student_uid,sum,var = student_sum_and_var(file_dir+i)
+        student_uid,sum,var,mean,day_num = student_sum_and_var_and_mean(file_dir+i)
         print(student_uid)
-        all_student_data.append([student_uid,sum,var])
+        all_student_data.append([student_uid,sum,var,mean,day_num])
     return all_student_data
 
 
 if __name__ == '__main__':
     all_student_data = main('..\\input\\sensor\\bluetooth\\')
     #np.savetxt('conversation.csv',all_student_data,delimiter = ',')
-    name = ['uid','sum','var']
+    name = ['uid','sum','var','mean','day_num']
     test = pd.DataFrame(columns=name,data=all_student_data)
     test.to_csv('data\\bluetooth.csv',encoding = 'gbk')
     print('done')

@@ -42,7 +42,7 @@ def get_interval_sum_and_var(daily_data):
         daily_interval.append(i[3])
         #print(i[3])
     #print(daily_interval)
-    return np.sum(daily_interval),np.var(daily_interval)
+    return np.sum(daily_interval),np.var(daily_interval),np.mean(daily_data),len(daily_data)
     
 def student_sum_and_var(filename):
     file = get_file(filename)
@@ -57,9 +57,9 @@ def student_sum_and_var(filename):
         day = daytime.tm_mday
         time_and_interval.append([year,mon,day,time_interval])
     daily_data = get_daily_data(time_and_interval)
-    sum,var = get_interval_sum_and_var(daily_data)
+    sum,var,mean,day_num = get_interval_sum_and_var(daily_data)
     student_uid = re.findall('phonecharge_([^"]*).csv', filename)[0]
-    return student_uid,sum,var
+    return student_uid,sum,var,mean,day_num
     
 def get_filename(file_dir):
     for root,dirs,files in os.walk(file_dir):
@@ -70,14 +70,14 @@ def main(file_dir):
     print(all_filename)
     all_student_data = []
     for i in all_filename:
-        student_uid,sum,var = student_sum_and_var(file_dir+i)
+        student_uid,sum,var,mean,day_num = student_sum_and_var(file_dir+i)
         print(student_uid)
-        all_student_data.append([student_uid,sum,var])
+        all_student_data.append([student_uid,sum,var,mean,day_num])
     return all_student_data
 if __name__ == '__main__':
     all_student_data = main('..\\input\\sensor\\phonecharge\\')
     #np.savetxt('conversation.csv',all_student_data,delimiter = ',')
-    name = ['uid','sum','var']
+    name = ['uid','sum','var','mean','day_num']
     test = pd.DataFrame(columns=name,data=all_student_data)
     test.to_csv('data\\phonecharge.csv',encoding = 'gbk')
     print('done')
