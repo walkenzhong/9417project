@@ -21,7 +21,7 @@ def get_time_interval(start_time, end_time):
 
 
 def from_timestamp_to_daytime(timestamp):
-    return time.localtime(timestamp)
+    return time.localtime(timestamp-18000)
 
 
 def get_daily_data(time_and_interval):

@@ -11,7 +11,7 @@ def get_file(filename):
     return all_file
 
 def from_timestamp_to_daytime(timestamp):
-    return time.localtime(timestamp)
+    return time.localtime(timestamp-18000)
 
 #get all filename in a dir
 def get_filename(file_dir):
