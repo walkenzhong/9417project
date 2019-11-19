@@ -27,3 +27,6 @@ var: 每日解锁时间的方差
 ### data20191117
 更新预处理，结果为统计每天时间，并输出每个学生每天的时间及日期到单独的一张csv表上,数据可视化已完成  
 均值及天数更新在data的csv中
+
+### normalization
+data中的normalization.csv为所有feature归一化后的值
