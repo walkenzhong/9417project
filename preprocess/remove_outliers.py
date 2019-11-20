@@ -27,7 +27,7 @@ def remove_outliers(all_features):
     # contamination: percentage of outliers
     # max_samples: # of samples to draw from X to train each base estimator.
     # max_samples: default = all samples
-    clf = IsolationForest(contamination=0.1, behaviour='new')
+    clf = IsolationForest(contamination=0.06, behaviour='new')
     clf.fit(features_without_uid)
 
     # predictions
@@ -49,6 +49,9 @@ def main():
     all_features = pd.read_csv('data/all_features.csv')
     # remove first index column
     all_features = all_features.iloc[:,1:]
+
+    # try remove the row with invalid data
+    #all_features = all_features[all_features.uid != 'u39']
     
     # fill NaN value with 0
     # NaN found at index 31:
