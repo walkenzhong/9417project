@@ -9,10 +9,10 @@ def get_file(filename):
     return all_file
 
 def combine():
-    flourishing = get_file('Flourishing_result.csv')
-    panas= get_file('panas_result.csv')
-    data = pd.merge(flourishing,panas)
-    return data
+    flourishing = get_file('Flourishing_result_without0.csv')
+    #panas= get_file('panas_result_without0.csv')
+    #data = pd.merge(flourishing,panas)
+    return flourishing
 
 def from_number_to_low_high():
     data = combine()
@@ -38,4 +38,4 @@ def from_number_to_low_high():
 
 if __name__ == '__main__':
     data = from_number_to_low_high()
-    data.to_csv("output_label.csv",encoding = 'gbk')
+    data.to_csv("Flourishing_result_without0_label.csv",encoding = 'gbk')
