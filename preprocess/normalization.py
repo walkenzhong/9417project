@@ -17,7 +17,7 @@ def normalization(filename):
     all_data = pd.read_csv(filename, sep=',')
     #print(all_data.columns.values)
     for i in range(2,len(all_data.columns.values)):
-        #print(all_data.columns.values[i])
+        print(all_data.columns.values[i])
         all_data[all_data.columns.values[i]] = get_line(all_data[all_data.columns.values[i]])
     all_data.to_csv("data\\normalization.csv",encoding = 'gbk')
 
