@@ -12,7 +12,7 @@ def get_line(data):
 
 def normalization(all_data):
     #print(all_data.columns.values)
-    for i in range(2,len(all_data.columns.values)):
+    for i in range(1,len(all_data.columns.values)):
         #print(all_data.columns.values[i])
         all_data[all_data.columns.values[i]] = get_line(all_data[all_data.columns.values[i]])
     all_data.to_csv("data/all_features_normalised.csv")
